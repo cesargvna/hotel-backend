@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-  username: {
+const roomSchema = new mongoose.Schema({
+  number: Number,
+  state: {
     type: String,
-    unique: true,
+    default: "available",
   },
-  name: String,
-  email: {
-    type: String,
-    unique: true,
+  price: Number,
+  type: String,
+  hotelId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Hotel",
   },
-  passwordHash: String,
-  reservations: [
+  reserves: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Reserve",
@@ -19,15 +20,12 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-userSchema.set("toJSON", {
+roomSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
     delete returnedObject.__v;
-    delete returnedObject.passwordHash;
   },
 });
 
-const User = mongoose.model("User", userSchema);
-
-export default User;
+export default mongoose.model("Room", roomSchema);
