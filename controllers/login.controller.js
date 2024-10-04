@@ -15,4 +15,20 @@ const login = async (req, res) => {
   res.status(200).send({ token, email: user.email, name: user.name });
 };
 
-export default login;
+const register = async (req, res, next) => {
+  const { email, password } = req.body;
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash(password, saltRounds);
+  const user = new User({
+    email,
+    passwordHash,
+  });
+  try {
+    const savedUser = await user.save();
+    res.status(201).json(savedUser);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+export { login, register }

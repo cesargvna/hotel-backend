@@ -36,7 +36,7 @@ app.use(tokenExtractor);
 app.use(upload);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use("/api/login", loginRouter);
+app.use("/api", loginRouter);
 app.use("/api/user", userExtractor, userRouter);
 app.use("/api/hotels", userExtractor, hotelRouter);
 app.use("/api/room", userExtractor, roomRouter);

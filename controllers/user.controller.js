@@ -26,11 +26,10 @@ const getUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-  const { username, name, email, password } = req.body;
+  const { name, email, password } = req.body;
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
   const user = new User({
-    username,
     name,
     email,
     passwordHash,
@@ -46,10 +45,9 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, name, email, password } = req.body;
+  const { name, email, password } = req.body;
   const passwordHash = await bcrypt.hash(password, 10);
   const user = {
-    username,
     name,
     email,
     passwordHash: passwordHash,

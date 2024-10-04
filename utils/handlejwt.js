@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 const tokenSign = async (user) => {
   const userForToken = {
     name: user.name,
-    username: user.username,
     email: user.email,
     id: user._id,
   };

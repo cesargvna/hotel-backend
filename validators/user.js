@@ -2,15 +2,7 @@ import { body } from "express-validator";
 import validateResult from "../utils/handleValidator.js";
 
 const validateUser = [
-  body("username")
-    .exists()
-    .withMessage("Username is required.")
-    .isLength({ min: 3 })
-    .withMessage("Username must be at least 3 characters long."),
-
   body("name")
-    .exists()
-    .withMessage("Name is required.")
     .isLength({ min: 3 })
     .withMessage("Name must be at least 3 characters long.")
     .isLength({ max: 20 })
