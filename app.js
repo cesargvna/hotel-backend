@@ -10,7 +10,11 @@ import mongoose from "mongoose";
 import { MONGODB_URI } from "./utils/config.js";
 import { errorHandler } from "./middleware/global.middleware.js";
 import { tokenExtractor, userExtractor } from "./middleware/sesion.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import fileUplosd from "express-fileupload";
 
+const upload = fileUplosd();
 mongoose.set("strictQuery", false);
 console.log("connecting to MongoDB");
 
@@ -23,13 +27,18 @@ mongoose
     console.log("error connecting to MongoDB:", error.message);
   });
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(express.json());
 app.use(cors());
 app.use(tokenExtractor);
+app.use(upload);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/login", loginRouter);
 app.use("/api/user", userExtractor, userRouter);
-app.use("/api/hotel", userExtractor, hotelRouter);
+app.use("/api/hotels", userExtractor, hotelRouter);
 app.use("/api/room", userExtractor, roomRouter);
 app.use("/api/reserve", userExtractor, reserveRouter);
 

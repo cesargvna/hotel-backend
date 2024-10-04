@@ -1,4 +1,9 @@
 import Hotel from "../models/hotel.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const getHotels = async (req, res, next) => {
   try {
@@ -10,8 +15,31 @@ export const getHotels = async (req, res, next) => {
 };
 
 export const createHotel = async (req, res, next) => {
+  const { name, address, clasification, price, description } = req.body;
+
+  console.log(req.files.image);
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  const imageFile = req.files.image;
+  console.log(imageFile);
+  const uploadPath = path.join(__dirname, "../uploads", imageFile.name);
+
+  imageFile.mv(uploadPath, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
   try {
-    const hotel = new Hotel(req.body);
+    const hotel = new Hotel({
+      name,
+      address,
+      clasification,
+      image: `/uploads/${imageFile.name}`,
+      price,
+      description,
+    });
     await hotel.save();
     res.status(201).json(hotel);
   } catch (error) {
