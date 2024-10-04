@@ -29,7 +29,7 @@ app.use(tokenExtractor);
 
 app.use("/api/login", loginRouter);
 app.use("/api/user", userExtractor, userRouter);
-app.use("/api/hotel", userExtractor, hotelRouter);
+app.use("/api/hotels", userExtractor, hotelRouter);
 app.use("/api/room", userExtractor, roomRouter);
 app.use("/api/reserve", userExtractor, reserveRouter);
 
