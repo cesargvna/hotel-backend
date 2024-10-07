@@ -13,10 +13,10 @@ export const getRooms = async (req, res, next) => {
   }
 };
 export const createRoom = async (req, res, next) => {
-  const { number, state, price, type, hotelId } = req.body;
+  const { number, price, type, hotelId } = req.body;
   try {
     const hotel = await Hotel.findById(hotelId);
-    const room = new Room({ number, state, price, type, hotelId: hotel.id });
+    const room = new Room({ number, price, type, hotelId: hotel.id });
     const savedRoom = await room.save();
     hotel.rooms = hotel.rooms.concat(savedRoom._id);
     await hotel.save();

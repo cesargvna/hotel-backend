@@ -13,6 +13,7 @@ import { tokenExtractor, userExtractor } from "./middleware/sesion.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import fileUplosd from "express-fileupload";
+import searchRouter from "./routes/search.router.js";
 
 const upload = fileUplosd();
 mongoose.set("strictQuery", false);
@@ -36,6 +37,7 @@ app.use(tokenExtractor);
 app.use(upload);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use("/api/search", searchRouter);
 app.use("/api", loginRouter);
 app.use("/api/user", userExtractor, userRouter);
 app.use("/api/hotels", userExtractor, hotelRouter);

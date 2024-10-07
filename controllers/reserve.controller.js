@@ -6,7 +6,7 @@ export const getReserves = async (req, res, next) => {
   try {
     const reserves = await Reserve.find({})
       .populate("roomId")
-      .populate("userId");
+      .populate("userId", { name: 1, email: 1, reservations: 1 });
     res.status(200).json(reserves);
   } catch (error) {
     next(error);

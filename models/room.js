@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema({
-  number: Number,
+  number: String,
   state: {
     type: String,
     default: "available",

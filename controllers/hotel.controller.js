@@ -78,3 +78,13 @@ export const deleteHotel = async (req, res) => {
     next(error);
   }
 };
+
+export const getHotelRooms = async (req, res, next) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id).populate("rooms");
+    if (!hotel) return res.status(404).json({ message: "Hotel not found" });
+    res.status(200).json(hotel.rooms);
+  } catch (error) {
+    next(error);
+  }
+};

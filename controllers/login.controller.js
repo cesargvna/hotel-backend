@@ -12,7 +12,9 @@ const login = async (req, res) => {
   }
 
   const token = await tokenSign(user);
-  res.status(200).send({ token, email: user.email, name: user.name });
+  res
+    .status(200)
+    .send({ token, id: user.id, email: user.email, name: user.name });
 };
 
 const register = async (req, res, next) => {
@@ -29,6 +31,6 @@ const register = async (req, res, next) => {
   } catch (error) {
     res.status(400).json(error);
   }
-}
+};
 
-export { login, register }
+export { login, register };
