@@ -39,7 +39,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/search", searchRouter);
 app.use("/api", loginRouter);
-app.use("/api/user", userExtractor, userRouter);
+app.use("/api/users", userExtractor, userRouter);
 app.use("/api/hotels", userExtractor, hotelRouter);
 app.use("/api/room", userExtractor, roomRouter);
 app.use("/api/reserve", userExtractor, reserveRouter);

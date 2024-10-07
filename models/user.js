@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
       ref: "Reserve",
     },
   ],
+  role: {
+    type: String,
+    default: "client"
+  },
 });
 
 userSchema.set("toJSON", {

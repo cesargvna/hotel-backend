@@ -26,13 +26,17 @@ const getUser = async (req, res, next) => {
 };
 
 const createUser = async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, phone, address, email, password, role } = req.body;
+  console.log(role)
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
   const user = new User({
     name,
+    phone,
+    address,
     email,
     passwordHash,
+    role,
   });
   try {
     const savedUser = await user.save();

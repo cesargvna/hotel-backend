@@ -14,7 +14,7 @@ const login = async (req, res) => {
   const token = await tokenSign(user);
   res
     .status(200)
-    .send({ token, id: user.id, email: user.email, name: user.name });
+    .send({ token, id: user.id, email: user.email, name: user.name, role: user.role });
 };
 
 const register = async (req, res, next) => {

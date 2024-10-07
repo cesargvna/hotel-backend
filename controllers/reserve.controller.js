@@ -26,24 +26,38 @@ export const getReserve = async (req, res, next) => {
 };
 
 export const createReserve = async (req, res, next) => {
-  const { fechaIni, fechaFin, userId, roomId } = req.body;
+  const { user, hotelId, rooms, date } = req.body;
+
+  const userQuery = await User.findById(user.id);
+  console.log(user, hotelId, rooms, date)
+  for (let i = 0; i < rooms.length; i++) {
+    try {
+      const room = await Room.findById(rooms[i].id);
+
+      const reserve = new Reserve({
+        fechaIni: date.fechaIni,
+        fechaFin: date.fechaFin,
+        userId: userQuery.id,
+        roomId: room.id,
+      });
+      const savedReserve = await reserve.save();
+      userQuery.reservations = userQuery.reservations.concat(savedReserve._id);
+      room.reserves = room.reserves.concat(savedReserve._id);
+      await userQuery.save();
+      await room.save();
+      res.status(201).json(savedReserve);
+    } catch (error) {
+      next(error);
+    }
+
+  }
   try {
-    const room = await Room.findById(roomId);
-    const user = await User.findById(userId);
-    const reserve = new Reserve({
-      fechaIni,
-      fechaFin,
-      userId: user.id,
-      roomId: room.id,
-    });
-    const savedReserve = await reserve.save();
-    user.reservations = user.reservations.concat(savedReserve._id);
-    room.reserves = room.reserves.concat(savedReserve._id);
-    await user.save();
-    await room.save();
-    res.status(201).json(savedReserve);
-  } catch (error) {
-    next(error);
+    userQuery.name = user.name;
+    userQuery.address = user.address;
+    userQuery.phone = user.phone;
+    await userQuery.save();
+  } catch (err) {
+    next(err);
   }
 };
 export const updateReserve = async (req, res, next) => {
