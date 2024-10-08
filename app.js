@@ -16,6 +16,7 @@ import fileUplosd from "express-fileupload";
 import searchRouter from "./routes/search.router.js";
 
 const upload = fileUplosd();
+
 mongoose.set("strictQuery", false);
 console.log("connecting to MongoDB");
 
@@ -27,6 +28,7 @@ mongoose
   .catch((error) => {
     console.log("error connecting to MongoDB:", error.message);
   });
+app.use(express.static("dist"));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
