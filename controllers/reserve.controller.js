@@ -29,7 +29,6 @@ export const createReserve = async (req, res, next) => {
   const { user, hotelId, rooms, date } = req.body;
 
   const userQuery = await User.findById(user.id);
-  console.log(user, hotelId, rooms, date)
   for (let i = 0; i < rooms.length; i++) {
     try {
       const room = await Room.findById(rooms[i].id);
@@ -49,7 +48,6 @@ export const createReserve = async (req, res, next) => {
     } catch (error) {
       next(error);
     }
-
   }
   try {
     userQuery.name = user.name;
@@ -103,7 +101,6 @@ export const deleteReserve = async (req, res, next) => {
     await Reserve.findByIdAndDelete(id);
     res.status(200).json({ message: "Reserve deleted" });
   } catch (error) {
-    console.log("llego", error);
     next(error);
   }
 };
