@@ -12,10 +12,10 @@ import { errorHandler } from "./middleware/global.middleware.js";
 import { tokenExtractor, userExtractor } from "./middleware/sesion.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import fileUplosd from "express-fileupload";
+import fileUploassd from "express-fileupload";
 import searchRouter from "./routes/search.router.js";
 
-const upload = fileUplosd();
+const upload = fileUploassd();
 
 mongoose.set("strictQuery", false);
 console.log("connecting to MongoDB");
